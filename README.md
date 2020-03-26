@@ -1,5 +1,4 @@
 # ColideBall
-COLISÕES BARRETO UTFPR
+COVID-19 SIMULATOR
 
-
-Visualização .
+Simulação da manifestação do COVID-19 , e sua velocidade de propragação.
