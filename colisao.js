@@ -80,7 +80,7 @@ function draw() {
   fill('green');
   text('Sadios: '+(quantidade-contcontagio), 10, textsize*6+2);
   fill('green');
-   text("FPS " +  int(getFrameRate()), width-textsize*10, 20); 
+   //text("FPS " +  int(getFrameRate()), width-textsize*10, 20); 
    noStroke();
 
   
