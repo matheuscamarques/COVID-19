@@ -77,7 +77,7 @@ function draw() {
 
       contcontagio++;
 
-      x = millis() / 60;
+      x = millis();
       y = contcontagio;
       PlotP.push(new Points(x, y));
       Bola[i].verificado = 1;
