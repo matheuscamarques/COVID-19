@@ -14,14 +14,20 @@ var quantidade = 300;
 var Bola = [];
 var tam; //DIAMETRO
 var contcontagio = 0;
+var PlotP = [];
+var plot = false;
+var ctx;
+
+
+
 
 function setup() {
-  
+  PlotP.pop(0,0);
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   for(i=0;i<quantidade;i++)
   {
-    tam = random(7,7);
+    tam = random(5,5);
     Bola[i] = new Ball(random(width-tam,tam),
                        random(height-tam,tam),
                        random(-2,2),
@@ -30,25 +36,39 @@ function setup() {
                       );
    } 
 
+   
 }
 
 function draw() {
   background(0);
-  Bola[1].contagio = 1;
- 
   
-  if(contcontagio == quantidade){
-    for(i=0;i<quantidade;i++)
-    {
-      Bola[i].contagio = 0;
-      Bola[i].verificado = 0;
-      Bola[i].R = 0;
-                Bola[i].G = 255;
-                Bola[i].B = 0;
-                contcontagio = 0;
-                Bola[1].contagio = 1;
-    }
+  Bola[0].contagio = 1;
+
+
+  Bola[50].contagio = 1;
+  Bola[299].contagio = 1;
+  
+   
+  if(contcontagio == quantidade && plot == false){
+       /* for(i=0;i<quantidade;i++)
+        {
+          Bola[i].contagio = 0;
+          Bola[i].verificado = 0;
+          Bola[i].R = 0;
+                    Bola[i].G = 255;
+                    Bola[i].B = 0;
+                    contcontagio = 0;
+                    Bola[1].contagio = 1;
+        }*/
+        for(i=0;i<PlotP.length;i++){
+          console.log();
+        }
+        plot = true;
+
+
   }
+
+  
   
  
  for(i=0;i<quantidade;i++)
@@ -59,10 +79,18 @@ function draw() {
     if(Bola[i].contagio == 1 && Bola[i].verificado == 0){
 
         contcontagio++;
+
+        x = millis()/60;
+        y = contcontagio;
+        PlotP.push(new Points(x,y));
         Bola[i].verificado = 1;
+        //chart.render();
+        
     }
  
   }  
+  
+
   
   colisao();
   //mmarques.1997@alunos.utfpr.edu.br
@@ -83,6 +111,7 @@ function draw() {
    //text("FPS " +  int(getFrameRate()), width-textsize*10, 20); 
    noStroke();
 
+   
   
 }
 
@@ -192,4 +221,10 @@ function Ball(posx,posy,velx,vely,tam){
   
  
   
+}
+
+
+function Points(x,y){
+    this.x = x;
+    this.y = y;
 }
