@@ -27,7 +27,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   for (i = 0; i < quantidade; i++) {
-    tam = random(2, 2);
+    tam = random(1, 1);
     Bola[i] = new Ball(random(width - tam, tam),
       random(height - tam, tam),
       random(-2, 2),
