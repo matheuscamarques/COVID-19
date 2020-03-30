@@ -24,7 +24,7 @@ var ctx;
 function setup() {
   PlotP.pop(0, 0);
   frameRate(60);
-  createCanvas(windowWidth, 300);
+  createCanvas(windowWidth, windowHeight);
   frameRate(60);
   for (i = 0; i < quantidade; i++) {
     tam = random(2, 2);
