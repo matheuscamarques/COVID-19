@@ -10,7 +10,7 @@
 
 */
 
-var quantidade = 1500;
+var quantidade = 1000;
 var Bola = [];
 var tam; //DIAMETRO
 var contcontagio = 0;
@@ -27,7 +27,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   for (i = 0; i < quantidade; i++) {
-    tam = random(1, 1);
+    tam = random(3, 3);
     Bola[i] = new Ball(random(width - tam, tam),
       random(height - tam, tam),
       random(-2, 2),
