@@ -23,9 +23,9 @@ var ctx;
 
 function setup() {
   PlotP.pop(0, 0);
-  frameRate(60);
+  //frameRate(60);
   createCanvas(windowWidth, windowHeight);
-  frameRate(60);
+  frameRate(120);
   for (i = 0; i < quantidade; i++) {
     tam = random(5, 10);
     Bola[i] = new Ball(random(width - tam, tam),
