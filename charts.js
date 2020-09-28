@@ -65,4 +65,4 @@ window.onload = function () {
 }
 
 
-window.onmousemove = chart.render();
+///window.onmousemove = chart.render();
