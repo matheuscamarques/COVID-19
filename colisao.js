@@ -46,7 +46,6 @@ function draw() {
 
 
 
-
   if (contcontagio == quantidade && plot == false) {
     /* for(i=0;i<quantidade;i++)
      {
@@ -89,7 +88,7 @@ function draw() {
 
 
 
-  colisao();
+  //
   //mmarques.1997@alunos.utfpr.edu.br
   var textsize = (300 * 15) / 300;
   strokeWeight(5);
@@ -105,9 +104,10 @@ function draw() {
   fill('green');
   text('Sadios: ' + (quantidade - contcontagio), 10, textsize * 6 + 2);
   fill('green');
-  text("FPS " +  int(getFrameRate()), width-textsize*10, 20); 
+  text("FPS " + int(getFrameRate()), width - textsize * 10, 20);
   noStroke();
 
+  colisao();
 
 
 }
@@ -117,50 +117,71 @@ function colisao() {
   var distancia_centros;
   var x, y;
 
+  let boundary = new Rectangle(windowWidth / 2, windowHeight / 2, windowHeight, windowHeight);
+  let qtree = new QuadTree(boundary, 4);
+  //console.log(Bola);
+  for (let i of Bola) {
+    let point = new Point(i.posx, i.posy, i);
+    qtree.insert(point);
+  }
+  //console.log(qtree);
 
-  for (i = 0; i < quantidade; i++) {
-    for (j = i + 1; j < quantidade; j++) {
-      x = Bola[i].posx - Bola[j].posx;
-      y = Bola[i].posy - Bola[j].posy;
+  //return;
+  for (let p of Bola) {
+    //console.log(p);
+    let range = new Circle(p.posx, p.posy, p.tam * 2);
+    let points = qtree.query(range);
+
+    //console.log(points);
+    for (let po of points) {
+
+      let p2 = po.userData;
+      x = p.posx - p2.posx;
+      y = p.posy - p2.posy;
+
       distancia_centros = x * x + y * y;
       // alert(distancia_centros);
 
-      if (distancia_centros <= (Bola[i].tam / 2 * Bola[j].tam / 2) * 4) {
-        if (Bola[i].contagio == 1 || Bola[j].contagio == 1) {
-          Bola[i].R = 255;
-          Bola[i].G = 0;
-          Bola[i].B = 0;
+      if (p !== p2 && distancia_centros <= (p.tam / 2 * p2.tam / 2) * 4) {
 
-          Bola[j].R = 255;
-          Bola[j].G = 0;
-          Bola[j].B = 0;
+        if (p.contagio == 1 || p2.contagio == 1) {
+          p.R = 255;
+          p.G = 0;
+          p.B = 0;
 
-          Bola[i].contagio = 1;
-          Bola[j].contagio = 1;
+          p2.R = 255;
+          p2.G = 0;
+          p2.B = 0;
+
+          p.contagio = 1;
+          p2.contagio = 1;
         }
 
 
         //Atualiza vel
+
         var colisao = distancia_centros;
+        var pvx1 = ((p.velx * x) + (p.vely * y)) * x / colisao;
+        var pvy1 = ((p.velx * x) + (p.vely * y)) * y / colisao;
+        var pvx2 = ((p2.velx * x) + (p2.vely * y)) * x / colisao;
+        var pvy2 = ((p2.velx * x) + (p2.vely * y)) * y / colisao;
 
-        var pvx1 = ((Bola[i].velx * x) + (Bola[i].vely * y)) * x / colisao;
-        var pvy1 = ((Bola[i].velx * x) + (Bola[i].vely * y)) * y / colisao;
-        var pvx2 = ((Bola[j].velx * x) + (Bola[j].vely * y)) * x / colisao;
-        var pvy2 = ((Bola[j].velx * x) + (Bola[j].vely * y)) * y / colisao;
 
-        Bola[i].velx -= (pvx1 - pvx2);
-        Bola[i].vely -= (pvy1 - pvy2);
 
-        Bola[j].velx -= (pvx2 - pvx1);
-        Bola[j].vely -= (pvy2 - pvy1);
+
+        p.velx -= (pvx1 - pvx2);
+        p.vely -= (pvy1 - pvy2);
+
+        p2.velx -= (pvx2 - pvx1);
+        p2.vely -= (pvy2 - pvy1);
 
         if (x != 0 && y != 0) {
 
-          Bola[i].posx += x / Math.abs(x);
-          Bola[i].posy += y / Math.abs(y);
+          p.posx += x / Math.abs(x);
+          p.posy += y / Math.abs(y);
 
-          Bola[j].posx -= x / Math.abs(x);
-          Bola[j].posy -= y / Math.abs(y);
+          p2.posx -= x / Math.abs(x);
+          p2.posy -= y / Math.abs(y);
 
         }
       }
