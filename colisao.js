@@ -10,7 +10,7 @@
 
 */
 
-var quantidade = 2500;
+var quantidade = 1250;
 var Bola = [];
 var tam; //DIAMETRO
 var contcontagio = 0;
